@@ -1,0 +1,13 @@
+; Network check that the transport rejects bad certificates. It skips (and passes) when
+; the test hosts cannot be reached, so offline builds stay green.
+
+(executable
+ (name tls_check)
+ (libraries core async core_unix.command_unix lightspark-client uri)
+ (preprocess
+  (pps ppx_jane)))
+
+(rule
+ (alias runtest)
+ (action
+  (run ./tls_check.exe)))
