@@ -53,7 +53,9 @@ end
 
 type t = Request.t -> (Response.t, string) Result.t Deferred.t
 
-(** cohttp-async with OpenSSL for [https]. [timeout] defaults to 30 s. *)
+(** cohttp-async with OpenSSL for [https]: the peer chain is verified against the system
+    trust store and the certificate must name the host in the URI (SNI is sent too).
+    [timeout] defaults to 30 s. *)
 val cohttp : ?timeout:Time_ns.Span.t -> unit -> t
 
 module Retry : sig

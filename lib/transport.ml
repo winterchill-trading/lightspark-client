@@ -56,12 +56,37 @@ end
 
 type t = Request.t -> (Response.t, string) Result.t Deferred.t
 
+(* async_ssl verifies the chain against the system roots by default (Verify_peer), but
+   neither it nor conduit-async checks that the certificate names the host we dialled;
+   without this check any valid certificate for another domain would be accepted. *)
+let ssl_config uri =
+  let host = Option.value (Uri.host uri) ~default:"" in
+  let verify conn =
+    return
+      (match Async_ssl.Ssl.Connection.peer_certificate conn with
+       | Some (Ok _) ->
+         Result.is_ok (Async_ssl.Ssl.Connection.check_peer_certificate_host conn host)
+       | Some (Error _) | None -> false)
+  in
+  Conduit_async.V2.Ssl.Config.create
+    ~hostname:host
+    ~verify_modes:[ Async_ssl.Verify_mode.Verify_peer ]
+    ~verify
+    ()
+;;
+
 let cohttp ?(timeout = Time_ns.Span.of_int_sec 30) () (request : Request.t) =
   let headers = Cohttp.Header.of_list request.headers in
+  let ssl_config =
+    match Uri.scheme request.uri with
+    | Some "https" -> Some (ssl_config request.uri)
+    | _ -> None
+  in
   let body = Option.map request.body ~f:Cohttp_async.Body.of_string in
   let call () =
     let%bind response, body =
       Cohttp_async.Client.call
+        ?ssl_config
         ~headers
         ?body
         (request.meth :> Cohttp.Code.meth)
