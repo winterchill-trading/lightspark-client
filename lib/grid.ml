@@ -289,6 +289,7 @@ end
 let create_quote
   ?immediately_execute
   ?description
+  ?sender_customer_info
   t
   ~source_account_id
   ~destination
@@ -315,6 +316,10 @@ let create_quote
          ; Some ("lockedCurrencyAmount", `Int amount)
          ; q "immediatelyExecute" (fun b -> `Bool b) immediately_execute
          ; q "description" (fun d -> `String d) description
+         ; q
+             "senderCustomerInfo"
+             (fun l -> `Assoc (List.map l ~f:(fun (k, v) -> k, `String v)))
+             sender_customer_info
          ])
   in
   guarded t (fun () ->

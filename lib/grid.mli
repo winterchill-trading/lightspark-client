@@ -112,9 +112,12 @@ module Destination : sig
         }
 end
 
+(** [sender_customer_info] fills fields the receiver asks for (e.g. [FULL_NAME],
+    [FI_LEGAL_ENTITY_NAME]); a quote missing one fails with [MISSING_MANDATORY_USER_INFO]. *)
 val create_quote
   :  ?immediately_execute:bool
   -> ?description:string
+  -> ?sender_customer_info:(string * string) list
   -> t
   -> source_account_id:string
   -> destination:Destination.t
