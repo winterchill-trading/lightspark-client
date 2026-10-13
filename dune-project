@@ -24,6 +24,7 @@
   core_unix
   async
   async_ssl
+  conduit-async
   cohttp
   cohttp-async
   ppx_jane
