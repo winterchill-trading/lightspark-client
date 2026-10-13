@@ -9,3 +9,4 @@ module Documents = Documents
 module Lightning_types = Lightning_types
 module Lightning = Lightning
 module Grid_types = Grid_types
+module Grid = Grid
