@@ -1,7 +1,7 @@
 (library
  (name lightspark_client)
  (public_name lightspark-client)
- (libraries core async yojson uri base64)
+ (libraries core async yojson uri base64 cohttp cohttp-async)
  (inline_tests
   (flags
    (:standard -source-tree-root .)))
