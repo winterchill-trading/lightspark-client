@@ -71,72 +71,103 @@ let graphql_reads graphql =
     printf "FAIL graphql current_account: %s\n" (Sexp.to_string [%sexp (e : Api_error.t)])
 ;;
 
-(* Sandbox write flow on objects created in this run: a customer, a sandbox deposit into
-   its USD account, and a payment to the sandbox success UMA address. *)
+(* Sandbox write flow on objects created in this run: two customers, a sandbox deposit
+   into the sender's USD account, and a USD to USDC conversion into the sender's own USDC
+   account. Transfers between customers are disabled on this platform, and UMA sends did
+   not work in this sandbox: the documented [$success.usd@sandbox.uma.money] fails with
+   INVALID_UMA_ADDRESS, and a UMA address on our own platform needs the platform's webhook
+   to approve the incoming payment (SENDER_NOT_ACCEPTED otherwise). *)
 let grid_writes grid =
   let run_id = Uuid_unix.create () |> Uuid.to_string in
+  let tag = String.prefix run_id 8 in
   let ( let*! ) d f =
     match%bind d with
     | Ok v -> f v
     | Error (_ : Api_error.t) -> return ()
   in
-  let*! customer =
+  let create_customer role =
     Grid.create_individual_customer
       grid
-      ~platform_customer_id:("wc-sandbox-" ^ String.prefix run_id 8)
-      ~full_name:"Sandbox Test"
+      ~platform_customer_id:(sprintf "wc-sandbox-%s-%s" tag role)
+      ~full_name:("Sandbox " ^ String.capitalize role)
       ~birth_date:"1990-01-15"
       ~nationality:"US"
       ~region:"US"
       ~currencies:[ "USD" ]
-      ~idempotency_key:("customer-" ^ run_id)
-    >>| check "grid create customer" ~describe:(fun (c : G.Customer.t) ->
-      sprintf "kyc=%s" (Option.value c.kyc_status ~default:"-"))
+        (* Required on platforms with embedded wallets, and Grid checks the domain accepts
+           mail (example.com is rejected), so use a plus-address on the org mailbox. *)
+      ~email:(sprintf "hello+sandbox-%s-%s@winterchill.xyz" tag role)
+      ~idempotency_key:(sprintf "customer-%s-%s" run_id role)
+    >>| check ("grid create customer " ^ role) ~describe:(fun (c : G.Customer.t) ->
+      sprintf
+        "kyc=%s uma=%b"
+        (Option.value c.kyc_status ~default:"-")
+        (Option.is_some c.uma_address))
   in
-  let*! accounts =
-    Grid.customer_internal_accounts ~customer_id:customer.id ~currency:"USD" grid
-    >>| check "grid customer accounts" ~describe:page_desc
+  (* Accounts are provisioned just after the customer; the [currency] filter returned
+     nothing for a brand-new customer, so list all and pick the USD fiat one. *)
+  let rec find_account ~currency ~type_ (customer : G.Customer.t) attempt =
+    match%bind Grid.customer_internal_accounts ~customer_id:customer.id grid with
+    | Error _ as e -> return e
+    | Ok (page : G.Internal_account.t G.Page.t) ->
+      (match
+         List.find page.data ~f:(fun a ->
+           String.equal a.balance.currency.code currency && String.equal a.type_ type_)
+       with
+       | Some a -> return (Ok a)
+       | None when attempt < 5 ->
+         let%bind () = Clock_ns.after (Time_ns.Span.of_int_sec 2) in
+         find_account ~currency ~type_ customer (attempt + 1)
+       | None ->
+         return
+           (Error
+              (Api_error.Decode
+                 { what = "accounts"; message = "no such account " ^ currency })))
   in
-  match List.hd accounts.data with
-  | None ->
-    incr failures;
-    printf "FAIL grid customer accounts: no USD account\n";
-    return ()
-  | Some account ->
-    let*! funded =
-      Grid.sandbox_fund_internal_account grid ~account_id:account.id ~amount:1000
-      >>| check "grid sandbox fund" ~describe:(fun (a : G.Internal_account.t) ->
-        G.Amount.to_string_hum a.balance)
+  let*! sender = create_customer "sender" in
+  let*! account =
+    find_account ~currency:"USD" ~type_:"INTERNAL_FIAT" sender 1
+    >>| check "grid sender USD account" ~describe:(fun _ -> "found")
+  in
+  let*! (_ : G.Internal_account.t) =
+    Grid.sandbox_fund_internal_account grid ~account_id:account.id ~amount:1000
+    >>| check "grid sandbox fund" ~describe:(fun (a : G.Internal_account.t) ->
+      G.Amount.to_string_hum a.balance)
+  in
+  let*! usdc_account =
+    find_account ~currency:"USDC" ~type_:"INTERNAL_CRYPTO" sender 1
+    >>| check "grid sender USDC account" ~describe:(fun _ -> "found")
+  in
+  let*! quote =
+    Grid.create_quote
+      grid
+      ~source_account_id:account.id
+      ~destination:(Account usdc_account.id)
+      ~locked_side:`Sending
+      ~amount:500
+      ~idempotency_key:("quote-" ^ run_id)
+    >>| check "grid create quote" ~describe:(fun (q : G.Quote.t) ->
+      sprintf
+        "status=%s sending=%d receiving=%d fees=%d"
+        q.status
+        q.total_sending_amount
+        q.total_receiving_amount
+        q.fees_included)
+  in
+  let*! executed =
+    Grid.execute_quote grid ~quote_id:quote.id ~idempotency_key:("execute-" ^ run_id)
+    >>| check "grid execute quote" ~describe:(fun (q : G.Quote.t) ->
+      sprintf "status=%s" q.status)
+  in
+  match executed.transaction_id with
+  | None -> return ()
+  | Some id ->
+    let%map (_ : _ Result.t) =
+      Grid.transaction grid ~id
+      >>| check "grid transaction after execute" ~describe:(fun (t : G.Transaction.t) ->
+        sprintf "type=%s status=%s" t.type_ t.status)
     in
-    ignore (funded : G.Internal_account.t);
-    let*! quote =
-      Grid.create_quote
-        grid
-        ~source_account_id:account.id
-        ~destination:
-          (Uma_address { address = "$success.usd@sandbox.uma.money"; currency = "USD" })
-        ~locked_side:`Sending
-        ~amount:500
-        ~idempotency_key:("quote-" ^ run_id)
-      >>| check "grid create quote" ~describe:(fun (q : G.Quote.t) ->
-        sprintf "status=%s sending=%d" q.status q.total_sending_amount)
-    in
-    let*! executed =
-      Grid.execute_quote grid ~quote_id:quote.id ~idempotency_key:("execute-" ^ run_id)
-      >>| check "grid execute quote" ~describe:(fun (q : G.Quote.t) ->
-        sprintf "status=%s" q.status)
-    in
-    (match executed.transaction_id with
-     | None -> return ()
-     | Some id ->
-       let%map (_ : _ Result.t) =
-         Grid.transaction grid ~id
-         >>| check
-               "grid transaction after execute"
-               ~describe:(fun (t : G.Transaction.t) ->
-                 sprintf "type=%s status=%s" t.type_ t.status)
-       in
-       ())
+    ()
 ;;
 
 let main () =
