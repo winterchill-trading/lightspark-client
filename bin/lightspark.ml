@@ -291,9 +291,57 @@ let grid_commands =
   ]
 ;;
 
+let webhook_commands =
+  let open Command.Param in
+  let body = flag "body" (required string) ~doc:"FILE raw request body" in
+  let signature =
+    flag "signature" (required string) ~doc:"VALUE signature header value"
+  in
+  let report sexp_of = function
+    | Ok event ->
+      print_s (sexp_of event);
+      Deferred.unit
+    | Error e ->
+      Print.eprint_s [%sexp (e : Error.t)];
+      exit 1
+  in
+  [ ( "grid"
+    , Command.async
+        ~summary:"verify an X-Grid-Signature against the platform's PEM public key"
+        (let%map.Command body
+         and signature
+         and key = flag "public-key" (required string) ~doc:"FILE PEM public key" in
+         fun () ->
+           let result =
+             let open Or_error.Let_syntax in
+             let%bind public_key = P256.public_key_of_pem (In_channel.read_all key) in
+             Webhook.Grid.verify ~public_key ~body:(In_channel.read_all body) ~signature
+           in
+           report Webhook.Grid.sexp_of_event result) )
+  ; ( "lightspark"
+    , Command.async
+        ~summary:"verify a lightspark-signature (secret from LIGHTSPARK_WEBHOOK_SECRET)"
+        (let%map.Command body and signature in
+         fun () ->
+           let result =
+             match Sys.getenv "LIGHTSPARK_WEBHOOK_SECRET" with
+             | None -> Or_error.error_string "LIGHTSPARK_WEBHOOK_SECRET not set"
+             | Some secret ->
+               Webhook.Lightspark.verify
+                 ~secret
+                 ~body:(In_channel.read_all body)
+                 ~signature
+           in
+           report Webhook.Lightspark.sexp_of_event result) )
+  ]
+;;
+
 let () =
   Command.group
     ~summary:"Lightspark GraphQL and Grid API client (credentials from LIGHTSPARK_* env)"
-    (lightning_commands @ [ "grid", Command.group ~summary:"Grid API" grid_commands ])
+    (lightning_commands
+     @ [ "grid", Command.group ~summary:"Grid API" grid_commands
+       ; "webhook", Command.group ~summary:"verify webhook signatures" webhook_commands
+       ])
   |> Command_unix.run
 ;;
