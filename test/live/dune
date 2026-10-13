@@ -1,0 +1,23 @@
+; Live checks against the real API. Skipped (one line, exit 0) when LIGHTSPARK_CLIENT_ID
+; or LIGHTSPARK_CLIENT_SECRET is unset, which is always the case in CI. Sandbox writes
+; run only with LIGHTSPARK_LIVE_WRITES=1.
+
+(executable
+ (name live_check)
+ (libraries
+  core
+  async
+  core_unix.command_unix
+  core_unix.uuid
+  lightspark-client)
+ (preprocess
+  (pps ppx_jane)))
+
+(rule
+ (alias runtest)
+ (deps
+  (env_var LIGHTSPARK_CLIENT_ID)
+  (env_var LIGHTSPARK_CLIENT_SECRET)
+  (env_var LIGHTSPARK_LIVE_WRITES))
+ (action
+  (run ./live_check.exe)))
