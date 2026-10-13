@@ -1,0 +1,31 @@
+{
+ "data": {
+  "invoice_for_payment_hash": {
+   "invoice": {
+    "__typename": "Invoice",
+    "invoice_id": "Invoice:00000000-0000-0000-0000-000000000001",
+    "invoice_created_at": "2026-01-01T00:00:00+00:00",
+    "invoice_updated_at": "2026-01-01T00:00:00+00:00",
+    "invoice_data": {
+     "__typename": "InvoiceData",
+     "invoice_data_encoded_payment_request": "lnbcrt1u1pexample",
+     "invoice_data_bitcoin_network": "REGTEST",
+     "invoice_data_payment_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+     "invoice_data_amount": {
+      "__typename": "CurrencyAmount",
+      "currency_amount_original_value": 100000,
+      "currency_amount_original_unit": "MILLISATOSHI",
+      "currency_amount_preferred_currency_unit": "USD",
+      "currency_amount_preferred_currency_value_rounded": 0,
+      "currency_amount_preferred_currency_value_approx": 0.0
+     },
+     "invoice_data_created_at": "2026-01-01T00:00:00+00:00",
+     "invoice_data_expires_at": "2026-01-02T00:00:00+00:00",
+     "invoice_data_memo": "test"
+    },
+    "invoice_status": "OPEN",
+    "invoice_amount_paid": null
+   }
+  }
+ }
+}

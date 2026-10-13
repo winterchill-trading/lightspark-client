@@ -1,0 +1,65 @@
+{
+ "data": {
+  "current_account": {
+   "nodes": {
+    "__typename": "AccountToNodesConnection",
+    "account_to_nodes_connection_count": 2,
+    "account_to_nodes_connection_page_info": {
+     "__typename": "PageInfo",
+     "page_info_has_next_page": false,
+     "page_info_has_previous_page": false,
+     "page_info_start_cursor": null,
+     "page_info_end_cursor": "cursor-2"
+    },
+    "account_to_nodes_connection_entities": [
+     {
+      "__typename": "LightsparkNodeWithRemoteSigning",
+      "lightspark_node_id": "LightsparkNodeWithRemoteSigning:00000000-0000-0000-0000-000000000001",
+      "lightspark_node_created_at": "2026-01-01T00:00:00+00:00",
+      "lightspark_node_display_name": "regtest-node",
+      "lightspark_node_bitcoin_network": "REGTEST",
+      "lightspark_node_public_key": "020000000000000000000000000000000000000000000000000000000000000000",
+      "lightspark_node_status": "READY",
+      "lightspark_node_balances": {
+       "__typename": "Balances",
+       "balances_owned_balance": {
+        "__typename": "CurrencyAmount",
+        "currency_amount_original_value": 10000000,
+        "currency_amount_original_unit": "SATOSHI",
+        "currency_amount_preferred_currency_unit": "USD",
+        "currency_amount_preferred_currency_value_rounded": 0,
+        "currency_amount_preferred_currency_value_approx": 0.0
+       },
+       "balances_available_to_send_balance": {
+        "__typename": "CurrencyAmount",
+        "currency_amount_original_value": 9000000,
+        "currency_amount_original_unit": "SATOSHI",
+        "currency_amount_preferred_currency_unit": "USD",
+        "currency_amount_preferred_currency_value_rounded": 0,
+        "currency_amount_preferred_currency_value_approx": 0.0
+       },
+       "balances_available_to_withdraw_balance": {
+        "__typename": "CurrencyAmount",
+        "currency_amount_original_value": 8000000,
+        "currency_amount_original_unit": "SATOSHI",
+        "currency_amount_preferred_currency_unit": "USD",
+        "currency_amount_preferred_currency_value_rounded": 0,
+        "currency_amount_preferred_currency_value_approx": 0.0
+       }
+      }
+     },
+     {
+      "__typename": "LightsparkNodeWithOSK",
+      "lightspark_node_id": "LightsparkNodeWithOSK:00000000-0000-0000-0000-000000000002",
+      "lightspark_node_created_at": "2026-01-01T00:00:00+00:00",
+      "lightspark_node_display_name": "mainnet-node",
+      "lightspark_node_bitcoin_network": "MAINNET",
+      "lightspark_node_public_key": null,
+      "lightspark_node_status": "READY",
+      "lightspark_node_balances": null
+     }
+    ]
+   }
+  }
+ }
+}

@@ -1,0 +1,8 @@
+{
+ "data": {
+  "entity": {
+   "__typename": "LightsparkNodeWithOSK",
+   "lightspark_node_bitcoin_network": "MAINNET"
+  }
+ }
+}

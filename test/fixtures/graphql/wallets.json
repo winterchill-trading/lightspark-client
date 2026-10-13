@@ -1,0 +1,55 @@
+{
+ "data": {
+  "current_account": {
+   "wallets": {
+    "__typename": "AccountToWalletsConnection",
+    "account_to_wallets_connection_count": 1,
+    "account_to_wallets_connection_page_info": {
+     "__typename": "PageInfo",
+     "page_info_has_next_page": false,
+     "page_info_has_previous_page": false,
+     "page_info_start_cursor": null,
+     "page_info_end_cursor": null
+    },
+    "account_to_wallets_connection_entities": [
+     {
+      "__typename": "Wallet",
+      "wallet_id": "Wallet:00000000-0000-0000-0000-000000000001",
+      "wallet_created_at": "2026-01-01T00:00:00+00:00",
+      "wallet_updated_at": "2026-01-01T00:00:00+00:00",
+      "wallet_last_login_at": null,
+      "wallet_balances": {
+       "__typename": "Balances",
+       "balances_owned_balance": {
+        "__typename": "CurrencyAmount",
+        "currency_amount_original_value": 1000,
+        "currency_amount_original_unit": "SATOSHI",
+        "currency_amount_preferred_currency_unit": "USD",
+        "currency_amount_preferred_currency_value_rounded": 0,
+        "currency_amount_preferred_currency_value_approx": 0.0
+       },
+       "balances_available_to_send_balance": {
+        "__typename": "CurrencyAmount",
+        "currency_amount_original_value": 1000,
+        "currency_amount_original_unit": "SATOSHI",
+        "currency_amount_preferred_currency_unit": "USD",
+        "currency_amount_preferred_currency_value_rounded": 0,
+        "currency_amount_preferred_currency_value_approx": 0.0
+       },
+       "balances_available_to_withdraw_balance": {
+        "__typename": "CurrencyAmount",
+        "currency_amount_original_value": 0,
+        "currency_amount_original_unit": "SATOSHI",
+        "currency_amount_preferred_currency_unit": "USD",
+        "currency_amount_preferred_currency_value_rounded": 0,
+        "currency_amount_preferred_currency_value_approx": 0.0
+       }
+      },
+      "wallet_third_party_identifier": "user-1",
+      "wallet_status": "READY"
+     }
+    ]
+   }
+  }
+ }
+}

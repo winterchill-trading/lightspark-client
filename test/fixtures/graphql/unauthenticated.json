@@ -1,0 +1,22 @@
+{
+ "data": {
+  "current_account": null
+ },
+ "errors": [
+  {
+   "message": "Not logged in.",
+   "locations": [
+    {
+     "line": 3,
+     "column": 5
+    }
+   ],
+   "path": [
+    "current_account"
+   ],
+   "extensions": {
+    "error_name": "AuthenticationException"
+   }
+  }
+ ]
+}

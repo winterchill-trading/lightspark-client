@@ -1,0 +1,53 @@
+{
+ "data": {
+  "current_account": {
+   "transactions": {
+    "__typename": "AccountToTransactionsConnection",
+    "account_to_transactions_connection_count": 40,
+    "account_to_transactions_connection_page_info": {
+     "__typename": "PageInfo",
+     "page_info_has_next_page": true,
+     "page_info_has_previous_page": false,
+     "page_info_start_cursor": null,
+     "page_info_end_cursor": "cursor-2"
+    },
+    "account_to_transactions_connection_entities": [
+     {
+      "__typename": "IncomingPayment",
+      "transaction_id": "IncomingPayment:00000000-0000-0000-0000-000000000001",
+      "transaction_created_at": "2026-01-03T00:00:00+00:00",
+      "transaction_updated_at": "2026-01-03T00:00:01+00:00",
+      "transaction_status": "SUCCESS",
+      "transaction_resolved_at": "2026-01-03T00:00:01+00:00",
+      "transaction_amount": {
+       "__typename": "CurrencyAmount",
+       "currency_amount_original_value": 100000,
+       "currency_amount_original_unit": "MILLISATOSHI",
+       "currency_amount_preferred_currency_unit": "USD",
+       "currency_amount_preferred_currency_value_rounded": 7,
+       "currency_amount_preferred_currency_value_approx": 0.07
+      },
+      "transaction_transaction_hash": null
+     },
+     {
+      "__typename": "Deposit",
+      "transaction_id": "Deposit:00000000-0000-0000-0000-000000000002",
+      "transaction_created_at": "2026-01-02T00:00:00+00:00",
+      "transaction_updated_at": "2026-01-02T00:00:00+00:00",
+      "transaction_status": "PENDING",
+      "transaction_resolved_at": null,
+      "transaction_amount": {
+       "__typename": "CurrencyAmount",
+       "currency_amount_original_value": 10000000,
+       "currency_amount_original_unit": "SATOSHI",
+       "currency_amount_preferred_currency_unit": "USD",
+       "currency_amount_preferred_currency_value_rounded": 0,
+       "currency_amount_preferred_currency_value_approx": 0.0
+      },
+      "transaction_transaction_hash": "0000000000000000000000000000000000000000000000000000000000000000"
+     }
+    ]
+   }
+  }
+ }
+}

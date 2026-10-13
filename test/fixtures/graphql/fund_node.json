@@ -1,0 +1,14 @@
+{
+ "data": {
+  "fund_node": {
+   "amount": {
+    "__typename": "CurrencyAmount",
+    "currency_amount_original_value": 10000000,
+    "currency_amount_original_unit": "SATOSHI",
+    "currency_amount_preferred_currency_unit": "USD",
+    "currency_amount_preferred_currency_value_rounded": 0,
+    "currency_amount_preferred_currency_value_approx": 0.0
+   }
+  }
+ }
+}
