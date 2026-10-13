@@ -43,6 +43,6 @@ type t =
 
 val to_error : t -> Error.t
 
-type 'a result = ('a, t) Result.t
+type 'a result = ('a, t) Result.t [@@deriving sexp_of]
 
 val ok_exn : 'a result -> 'a

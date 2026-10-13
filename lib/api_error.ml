@@ -68,7 +68,7 @@ type t =
 
 let to_error t = Error.create_s [%sexp "lightspark", (t : t)]
 
-type 'a result = ('a, t) Result.t
+type 'a result = ('a, t) Result.t [@@deriving sexp_of]
 
 let ok_exn = function
   | Ok x -> x
