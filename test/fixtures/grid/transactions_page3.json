@@ -1,0 +1,65 @@
+{
+ "data": [
+  {
+   "createdAt": "2026-10-13T19:56:25.929002Z",
+   "customerId": "Customer:00000000-0000-0000-0000-000000000001",
+   "description": "Funded sandbox internal account 00000000-0000-0000-0000-000000000001 with 1000",
+   "destination": {
+    "accountId": "InternalAccount:00000000-0000-0000-0000-000000000001",
+    "destinationType": "ACCOUNT"
+   },
+   "direction": "CREDIT",
+   "id": "Transaction:00000000-0000-0000-0000-000000000001",
+   "platformCustomerId": "customer-1",
+   "receivedAmount": {
+    "amount": 1000,
+    "currency": {
+     "code": "USD",
+     "decimals": 2,
+     "name": "US Dollar",
+     "symbol": "$"
+    }
+   },
+   "source": {
+    "currency": "USD",
+    "sourceType": "UMA_ADDRESS",
+    "umaAddress": "$test.user@examplesandbox.umaaas.uma.money"
+   },
+   "status": "COMPLETED",
+   "type": "INCOMING",
+   "updatedAt": "2026-10-13T19:56:25.955415Z"
+  },
+  {
+   "createdAt": "2026-10-13T19:55:53.177690Z",
+   "customerId": "Customer:00000000-0000-0000-0000-000000000002",
+   "description": "Funded sandbox internal account 00000000-0000-0000-0000-000000000002 with 1000",
+   "destination": {
+    "accountId": "InternalAccount:00000000-0000-0000-0000-000000000002",
+    "destinationType": "ACCOUNT"
+   },
+   "direction": "CREDIT",
+   "id": "Transaction:00000000-0000-0000-0000-000000000002",
+   "platformCustomerId": "customer-2",
+   "receivedAmount": {
+    "amount": 1000,
+    "currency": {
+     "code": "USD",
+     "decimals": 2,
+     "name": "US Dollar",
+     "symbol": "$"
+    }
+   },
+   "source": {
+    "currency": "USD",
+    "sourceType": "UMA_ADDRESS",
+    "umaAddress": "$test.user@examplesandbox.umaaas.uma.money"
+   },
+   "status": "COMPLETED",
+   "type": "INCOMING",
+   "updatedAt": "2026-10-13T19:55:53.201312Z"
+  }
+ ],
+ "hasMore": true,
+ "nextCursor": "cursor-example",
+ "totalCount": 44
+}

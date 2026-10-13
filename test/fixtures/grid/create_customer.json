@@ -1,0 +1,14 @@
+{
+ "birthDate": "1990-01-15",
+ "createdAt": "2026-10-13T20:03:26.203633Z",
+ "customerType": "INDIVIDUAL",
+ "email": "user@example.com",
+ "fullName": "Test User",
+ "id": "Customer:00000000-0000-0000-0000-000000000001",
+ "isDeleted": false,
+ "kycStatus": "APPROVED",
+ "nationality": "US",
+ "platformCustomerId": "customer-1",
+ "umaAddress": "$test.user@examplesandbox.umaaas.uma.money",
+ "updatedAt": "2026-10-13T20:03:26.266804Z"
+}

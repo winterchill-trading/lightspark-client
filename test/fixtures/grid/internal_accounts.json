@@ -1,0 +1,126 @@
+{
+ "data": [
+  {
+   "balance": {
+    "amount": 0,
+    "currency": {
+     "code": "USDT",
+     "decimals": 6,
+     "name": "Tether",
+     "symbol": "usdt"
+    }
+   },
+   "createdAt": "2026-10-13T19:57:43.123220Z",
+   "customerId": "Customer:00000000-0000-0000-0000-000000000001",
+   "fundingPaymentInstructions": [
+    {
+     "accountOrWalletInfo": {
+      "accountType": "ETHEREUM_WALLET",
+      "address": "0x0000000000000000000000000000000000000000",
+      "assetType": "USDT"
+     }
+    },
+    {
+     "accountOrWalletInfo": {
+      "accountType": "TRON_WALLET",
+      "address": "0x0000000000000000000000000000000000000000",
+      "assetType": "USDT"
+     }
+    },
+    {
+     "accountOrWalletInfo": {
+      "accountType": "ARBITRUM_WALLET",
+      "address": "0x0000000000000000000000000000000000000000",
+      "assetType": "USDT"
+     }
+    },
+    {
+     "accountOrWalletInfo": {
+      "accountType": "PLASMA_WALLET",
+      "address": "0x0000000000000000000000000000000000000000",
+      "assetType": "USDT"
+     }
+    }
+   ],
+   "id": "InternalAccount:00000000-0000-0000-0000-000000000001",
+   "status": "ACTIVE",
+   "totalBalance": {
+    "amount": 0,
+    "currency": {
+     "code": "USDT",
+     "decimals": 6,
+     "name": "Tether",
+     "symbol": "usdt"
+    }
+   },
+   "type": "INTERNAL_CRYPTO",
+   "updatedAt": "2026-10-13T19:57:43.123220Z"
+  },
+  {
+   "balance": {
+    "amount": 5000000,
+    "currency": {
+     "code": "USDC",
+     "decimals": 6,
+     "name": "USD Coin",
+     "symbol": "usdc"
+    }
+   },
+   "createdAt": "2026-10-13T19:57:41.913299Z",
+   "customerId": "Customer:00000000-0000-0000-0000-000000000001",
+   "fundingPaymentInstructions": [
+    {
+     "accountOrWalletInfo": {
+      "accountType": "SOLANA_WALLET",
+      "address": "0x0000000000000000000000000000000000000000",
+      "assetType": "USDC"
+     }
+    },
+    {
+     "accountOrWalletInfo": {
+      "accountType": "BASE_WALLET",
+      "address": "0x0000000000000000000000000000000000000000",
+      "assetType": "USDC"
+     }
+    },
+    {
+     "accountOrWalletInfo": {
+      "accountType": "ETHEREUM_WALLET",
+      "address": "0x0000000000000000000000000000000000000000",
+      "assetType": "USDC"
+     }
+    },
+    {
+     "accountOrWalletInfo": {
+      "accountType": "POLYGON_WALLET",
+      "address": "0x0000000000000000000000000000000000000000",
+      "assetType": "USDC"
+     }
+    },
+    {
+     "accountOrWalletInfo": {
+      "accountType": "ARBITRUM_WALLET",
+      "address": "0x0000000000000000000000000000000000000000",
+      "assetType": "USDC"
+     }
+    }
+   ],
+   "id": "InternalAccount:00000000-0000-0000-0000-000000000002",
+   "status": "ACTIVE",
+   "totalBalance": {
+    "amount": 0,
+    "currency": {
+     "code": "USDC",
+     "decimals": 6,
+     "name": "USD Coin",
+     "symbol": "usdc"
+    }
+   },
+   "type": "INTERNAL_CRYPTO",
+   "updatedAt": "2026-10-13T19:57:46.462737Z"
+  }
+ ],
+ "hasMore": true,
+ "nextCursor": "cursor-example",
+ "totalCount": 47
+}

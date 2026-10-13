@@ -1,0 +1,59 @@
+{
+ "balance": {
+  "amount": 1000,
+  "currency": {
+   "code": "USD",
+   "decimals": 2,
+   "name": "US Dollar",
+   "symbol": "$"
+  }
+ },
+ "createdAt": "2026-10-13T20:03:27.414891Z",
+ "customerId": "Customer:00000000-0000-0000-0000-000000000001",
+ "fundingPaymentInstructions": [
+  {
+   "accountOrWalletInfo": {
+    "accountNumber": "000000001",
+    "accountType": "USD_ACCOUNT",
+    "bankAddress": "1 Example Street",
+    "bankName": "Example Bank",
+    "paymentRails": [
+     "ACH",
+     "WIRE",
+     "RTP",
+     "FEDNOW"
+    ],
+    "reference": "REF-EXAMPLE",
+    "routingNumber": "000000000"
+   },
+   "instructionsNotes": "Include the reference in the memo"
+  },
+  {
+   "accountOrWalletInfo": {
+    "accountHolderName": "Sandbox Sender",
+    "accountNumber": "000000001",
+    "accountType": "SWIFT_ACCOUNT",
+    "bankName": "Example Bank",
+    "country": "US",
+    "paymentRails": [
+     "SWIFT"
+    ],
+    "swiftCode": "XXXXUSXXXXX"
+   },
+   "instructionsNotes": "Include the reference in the memo"
+  }
+ ],
+ "id": "InternalAccount:00000000-0000-0000-0000-000000000001",
+ "status": "ACTIVE",
+ "totalBalance": {
+  "amount": 1000,
+  "currency": {
+   "code": "USD",
+   "decimals": 2,
+   "name": "US Dollar",
+   "symbol": "$"
+  }
+ },
+ "type": "INTERNAL_FIAT",
+ "updatedAt": "2026-10-13T20:03:29.505379Z"
+}

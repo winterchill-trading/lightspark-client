@@ -1,0 +1,40 @@
+{
+ "createdAt": "2026-10-13T20:03:30.410737Z",
+ "customerId": "Customer:00000000-0000-0000-0000-000000000001",
+ "destination": {
+  "accountId": "InternalAccount:00000000-0000-0000-0000-000000000001",
+  "destinationType": "ACCOUNT"
+ },
+ "direction": "CREDIT",
+ "exchangeRate": 0.0001,
+ "fees": 0,
+ "id": "Transaction:00000000-0000-0000-0000-000000000001",
+ "platformCustomerId": "customer-1",
+ "quoteId": "Quote:00000000-0000-0000-0000-000000000001",
+ "receivedAmount": {
+  "amount": 5000000,
+  "currency": {
+   "code": "USDC",
+   "decimals": 6,
+   "name": "USD Coin",
+   "symbol": "usdc"
+  }
+ },
+ "sentAmount": {
+  "amount": 500,
+  "currency": {
+   "code": "USD",
+   "decimals": 2,
+   "name": "US Dollar",
+   "symbol": "$"
+  }
+ },
+ "source": {
+  "accountId": "InternalAccount:00000000-0000-0000-0000-000000000002",
+  "currency": "USD",
+  "sourceType": "ACCOUNT"
+ },
+ "status": "PROCESSING",
+ "type": "INCOMING",
+ "updatedAt": "2026-10-13T20:03:31.125837Z"
+}

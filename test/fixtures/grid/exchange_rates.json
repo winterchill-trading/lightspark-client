@@ -1,0 +1,79 @@
+{
+ "data": [
+  {
+   "destinationCurrency": {
+    "code": "BRL",
+    "decimals": 2,
+    "name": "Brazilian Real",
+    "symbol": "R$"
+   },
+   "destinationPaymentRail": "PIX",
+   "exchangeRate": 0.2020538817842094,
+   "fees": {
+    "fixed": 0,
+    "total": 168
+   },
+   "maxSendingAmount": 500000,
+   "minSendingAmount": 1233,
+   "receivingAmount": 48660,
+   "sendingAmount": 10000,
+   "sourceCurrency": {
+    "code": "USD",
+    "decimals": 2,
+    "name": "United States Dollar",
+    "symbol": "$"
+   },
+   "updatedAt": "2026-10-13T20:03:00.175374Z"
+  },
+  {
+   "destinationCurrency": {
+    "code": "INR",
+    "decimals": 2,
+    "name": "Indian Rupee",
+    "symbol": "₹"
+   },
+   "destinationPaymentRail": "UPI",
+   "exchangeRate": 0.010544753244545459,
+   "fees": {
+    "fixed": 100,
+    "total": 176
+   },
+   "maxSendingAmount": 212631,
+   "minSendingAmount": 313,
+   "receivingAmount": 931626,
+   "sendingAmount": 10000,
+   "sourceCurrency": {
+    "code": "USD",
+    "decimals": 2,
+    "name": "United States Dollar",
+    "symbol": "$"
+   },
+   "updatedAt": "2026-10-13T20:02:01.107570Z"
+  },
+  {
+   "destinationCurrency": {
+    "code": "GBP",
+    "decimals": 2,
+    "name": "British Pound",
+    "symbol": "£"
+   },
+   "destinationPaymentRail": "FASTER_PAYMENTS",
+   "exchangeRate": 1.3279493926306603,
+   "fees": {
+    "fixed": 0,
+    "total": 400
+   },
+   "maxSendingAmount": 500000,
+   "minSendingAmount": 138,
+   "receivingAmount": 7229,
+   "sendingAmount": 10000,
+   "sourceCurrency": {
+    "code": "USD",
+    "decimals": 2,
+    "name": "United States Dollar",
+    "symbol": "$"
+   },
+   "updatedAt": "2026-10-13T20:02:01.090755Z"
+  }
+ ]
+}

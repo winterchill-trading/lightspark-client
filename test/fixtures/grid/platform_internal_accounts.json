@@ -1,0 +1,87 @@
+{
+ "data": [
+  {
+   "balance": {
+    "amount": 160000,
+    "currency": {
+     "code": "USD",
+     "decimals": 2,
+     "name": "US Dollar",
+     "symbol": "$"
+    }
+   },
+   "createdAt": "2026-09-13T12:06:44.614618Z",
+   "fundingPaymentInstructions": [
+    {
+     "accountOrWalletInfo": {
+      "accountNumber": "000000001",
+      "accountType": "USD_ACCOUNT",
+      "bankAddress": "1 Example Street",
+      "bankName": "Example Bank",
+      "paymentRails": [
+       "ACH",
+       "WIRE"
+      ],
+      "reference": "REF-EXAMPLE",
+      "routingNumber": "000000000"
+     },
+     "instructionsNotes": "Include the reference in the memo"
+    }
+   ],
+   "id": "InternalAccount:00000000-0000-0000-0000-000000000001",
+   "status": "ACTIVE",
+   "totalBalance": {
+    "amount": 210000,
+    "currency": {
+     "code": "USD",
+     "decimals": 2,
+     "name": "US Dollar",
+     "symbol": "$"
+    }
+   },
+   "type": "INTERNAL_FIAT",
+   "updatedAt": "2026-09-13T13:40:14.088133Z"
+  },
+  {
+   "balance": {
+    "amount": 0,
+    "currency": {
+     "code": "USDC",
+     "decimals": 6,
+     "name": "USD Coin",
+     "symbol": "usdc"
+    }
+   },
+   "createdAt": "2026-09-13T12:06:44.628467Z",
+   "fundingPaymentInstructions": [
+    {
+     "accountOrWalletInfo": {
+      "accountType": "SOLANA_WALLET",
+      "address": "0x0000000000000000000000000000000000000000",
+      "assetType": "USDC"
+     }
+    },
+    {
+     "accountOrWalletInfo": {
+      "accountType": "BASE_WALLET",
+      "address": "0x0000000000000000000000000000000000000000",
+      "assetType": "USDC"
+     }
+    }
+   ],
+   "id": "InternalAccount:00000000-0000-0000-0000-000000000002",
+   "status": "ACTIVE",
+   "totalBalance": {
+    "amount": 0,
+    "currency": {
+     "code": "USDC",
+     "decimals": 6,
+     "name": "USD Coin",
+     "symbol": "usdc"
+    }
+   },
+   "type": "INTERNAL_CRYPTO",
+   "updatedAt": "2026-09-13T12:06:44.628467Z"
+  }
+ ]
+}
