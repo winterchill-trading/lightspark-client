@@ -1,0 +1,13 @@
+(executable
+ (name lightspark)
+ (public_name lightspark)
+ (package lightspark-client)
+ (libraries
+  core
+  async
+  core_unix.command_unix
+  core_unix.uuid
+  lightspark-client
+  yojson)
+ (preprocess
+  (pps ppx_jane)))
