@@ -1,8 +1,8 @@
 (** GraphQL documents for the server API.
 
-    Fragments and aliases follow the official SDKs (lightsparkdev/python-sdk,
-    js-sdk) so responses have the same shape the SDK parsers expect. Larger SDK documents
-    are trimmed to the fields this client decodes. *)
+    Fragments and aliases follow the official SDKs (lightsparkdev/python-sdk, js-sdk) so
+    responses have the same shape the SDK parsers expect. Larger SDK documents are trimmed
+    to the fields this client decodes. *)
 
 val currency_amount_fragment : string
 val account_fragment : string
