@@ -30,5 +30,6 @@
   ppx_yojson_conv
   yojson
   uri
+  base64
   cryptokit
   zarith))
