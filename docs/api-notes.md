@@ -91,3 +91,30 @@ defaults to `fun _ -> true`. Measured: with the default config a request to
 (part of `dune test`) asserts that expired, self-signed and wrong-host certificates are
 rejected and that `api.lightspark.com` still connects; it prints `skip` and passes when the
 hosts are unreachable.
+
+## Grid sandbox quirks (measured 2026-10-13)
+
+- `POST /customers` on a platform with embedded wallets requires `email`, and the
+  address must be deliverable (`example.com`, which has a null MX, is rejected with
+  `INVALID_INPUT`). On this regulated sandbox platform an individual is `APPROVED` at
+  creation and gets four internal accounts (USD fiat, USDC, USDT, an embedded USDB wallet)
+  a moment later.
+- `GET /customers/internal-accounts?customerId=...&currency=USD` returned an empty page for
+  a customer created seconds earlier, while the unfiltered list had the USD account.
+- `POST /sandbox/internal-accounts/{id}/fund` returns the account with the new balance
+  immediately and records an `INCOMING` `COMPLETED` transaction.
+- Quotes expire three minutes after creation. A same-customer USD to USDC quote reported
+  `exchangeRate: 1.0` (per whole unit) while the resulting transaction reported
+  `exchangeRate: 0.0001` (per smallest unit, cents to micro-USDC); do not compare them.
+- `POST /quotes/{id}/execute` answers with the quote in `PROCESSING`; the transaction is
+  `INCOMING`/`PROCESSING` right after and completes shortly after.
+- UMA sends: the documented `$success.usd@sandbox.uma.money` fails with
+  `400 INVALID_UMA_ADDRESS` ("Unable to resolve domain"). A UMA address on our own
+  platform first needs `senderCustomerInfo` with `FULL_NAME` and `FI_LEGAL_ENTITY_NAME`
+  (`MISSING_MANDATORY_USER_INFO` otherwise, as listed in the platform config's
+  `providerRequiredCounterpartyCustomerFields`), then fails with `SENDER_NOT_ACCEPTED`
+  because the receiving platform's webhook has to approve the payment.
+- Account-to-account quotes between two customers fail with `INVALID_INPUT` ("Transfers
+  between customers are not enabled for this platform").
+- `GET /internal-accounts` is 405; `GET /quotes/{id}` for an unknown id is
+  `404 QUOTE_NOT_FOUND`.
