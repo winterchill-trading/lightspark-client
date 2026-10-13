@@ -24,11 +24,11 @@
   core_unix
   async
   async_ssl
-  venue-net
+  cohttp
+  cohttp-async
   ppx_jane
   ppx_yojson_conv
   yojson
   uri
   cryptokit
-  base64
-  eqaf))
+  zarith))
