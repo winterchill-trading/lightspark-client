@@ -4,3 +4,4 @@ module Api_error = Api_error
 module Transport = Transport
 module Graphql = Graphql
 module Documents = Documents
+module Lightning_types = Lightning_types
