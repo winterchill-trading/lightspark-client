@@ -1,0 +1,10 @@
+(library
+ (name lightspark_client_test)
+ (libraries core async lightspark-client yojson base64)
+ (inline_tests
+  (deps
+   (source_tree fixtures))
+  (flags
+   (:standard -source-tree-root .)))
+ (preprocess
+  (pps ppx_jane)))
