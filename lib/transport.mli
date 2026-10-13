@@ -58,6 +58,12 @@ type t = Request.t -> (Response.t, string) Result.t Deferred.t
     [timeout] defaults to 30 s. *)
 val cohttp : ?timeout:Time_ns.Span.t -> unit -> t
 
+(** Wraps a transport so every response is written to [dir] as [<n>-<METHOD>-<path>.json]
+    holding the status and the response body (never request headers or bodies). Fixtures
+    for the tests are made this way, then redacted. [cohttp] applies it itself when
+    [LIGHTSPARK_RECORD_DIR] is set. *)
+val record : dir:string -> t -> t
+
 module Retry : sig
   type policy =
     { max_attempts : int

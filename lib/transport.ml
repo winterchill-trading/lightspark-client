@@ -75,7 +75,7 @@ let ssl_config uri =
     ()
 ;;
 
-let cohttp ?(timeout = Time_ns.Span.of_int_sec 30) () (request : Request.t) =
+let cohttp_raw ~timeout (request : Request.t) =
   let headers = Cohttp.Header.of_list request.headers in
   let ssl_config =
     match Uri.scheme request.uri with
@@ -102,6 +102,40 @@ let cohttp ?(timeout = Time_ns.Span.of_int_sec 30) () (request : Request.t) =
   | `Timeout -> Error (sprintf "timeout after %s" (Time_ns.Span.to_string_hum timeout))
   | `Result (Ok response) -> Ok response
   | `Result (Error exn) -> Error (Exn.to_string exn)
+;;
+
+let record_dir_var = "LIGHTSPARK_RECORD_DIR"
+let record_counter = ref 0
+
+let record ~dir (transport : t) (request : Request.t) =
+  let%map result = transport request in
+  (match result with
+   | Error _ -> ()
+   | Ok (response : Response.t) ->
+     incr record_counter;
+     let path =
+       String.map (Uri.path request.uri) ~f:(fun c ->
+         if Char.is_alphanum c || Char.equal c '-' then c else '_')
+     in
+     let file =
+       sprintf
+         "%s/%03d-%s-%s.json"
+         dir
+         !record_counter
+         (Sexp.to_string [%sexp (request.meth : Meth.t)])
+         path
+     in
+     let body =
+       match Yojson.Safe.from_string response.body with
+       | json -> json
+       | exception _ -> `String response.body
+     in
+     Out_channel.write_all
+       file
+       ~data:
+         (Yojson.Safe.pretty_to_string
+            (`Assoc [ "status", `Int response.status; "body", body ])));
+  result
 ;;
 
 module Retry = struct
@@ -176,6 +210,13 @@ module Retry = struct
     attempt 1 policy.initial_backoff
   ;;
 end
+
+let cohttp ?(timeout = Time_ns.Span.of_int_sec 30) () =
+  let transport = cohttp_raw ~timeout in
+  match Sys.getenv record_dir_var with
+  | Some dir when not (String.is_empty dir) -> record ~dir transport
+  | _ -> transport
+;;
 
 let%expect_test "retry honours idempotency and Retry-After" =
   let script = ref [] in
