@@ -9,6 +9,8 @@
   yojson
   uri
   base64
+  cryptokit
+  zarith
   cohttp
   cohttp-async)
  (inline_tests
