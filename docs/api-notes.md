@@ -74,3 +74,20 @@ though the status is not 200, so decode the body before looking at the status.
   ECDSA P-256 over SHA-256 of the raw body, DER-encoded signature, verified with the
   platform's PEM public key from the dashboard. Body `{id, type: "OBJECT.EVENT", timestamp,
   data}`; `id` is the idempotency key for deliveries.
+
+## TLS (checked 2026-10-13)
+
+The switch has conduit-async 8.0.0, cohttp-async 6.2.1 and async_ssl v0.18 preview.
+`Async_ssl.Ssl.client` defaults to `Verify_peer` and loads the system default verify
+paths when no `ca_file`/`ca_path` is given, so an expired or self-signed chain fails the
+handshake (`certificate verify failed`). But nothing checks that the certificate names the
+host: cohttp-async passes `~hostname` only for SNI, and conduit-async's `verify` callback
+defaults to `fun _ -> true`. Measured: with the default config a request to
+`https://wrong.host.badssl.com/` succeeds with status 200.
+
+`Transport.cohttp` therefore passes its own `Conduit_async.V2.Ssl.Config` with
+`Verify_peer` and a `verify` callback that requires a peer certificate and
+`Ssl.Connection.check_peer_certificate_host` for the URI host. `test/tls/tls_check.exe`
+(part of `dune test`) asserts that expired, self-signed and wrong-host certificates are
+rejected and that `api.lightspark.com` still connects; it prints `skip` and passes when the
+hosts are unreachable.
